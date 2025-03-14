@@ -19,6 +19,7 @@ class AB {
         else {
             echo "<p>Sikeres kapcsolódás</p>";
         }
+        $this->kapcsolat->query("SET NAMES UTF8");
     }
 
     //tagfüggvények
@@ -49,9 +50,46 @@ class AB {
         return $this->kapcsolat->query($sql);
     }
 
-    public function megjelenit() {
-        $matrix = $this->oszlopLeker("kep", "szin");
+    public function megjelenit($matrix) {
+        while ($row = $matrix->fetch_row()) {
+            echo "<img src='$row[0]'>";
+            //$matrix = $this->oszlopLeker("kep", "szin");
+        }
+        
     }
+
+    public function nevLeker($nev, $szin){
+        $sql = "SELECT $nev FROM $szin";
+        return $this->kapcsolat->query($sql);
+    }
+
+    public function oszlopLeker2($oszlop1, $oszlop2, $tabla) {
+        $sql = "SELECT $oszlop1,$oszlop2 FROM $tabla";
+        $matrix = $this->kapcsolat->query($sql);
+        return $matrix;
+    }
+
+    public function megjelenito2($matrix){
+        echo"<table>
+                <th>Név</th><th>Kép</th>";
+        while ($sor = $matrix->fetch_row()) {
+                echo "
+                <tr>
+                    <td>$sor[1]</td>
+                    <td><img src='$sor[0]'></td>
+                </tr>";  
+        }
+        echo "</table>";
+    }
+
+
+        public function modosit($tabla,$hol, $mit, $mire){
+            "UPDATE $tabla, SET $hol = '$mire' WHERE 1";
+        }
+
+
+
+
 
 
 
